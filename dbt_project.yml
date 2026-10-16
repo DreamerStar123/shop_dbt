@@ -1,0 +1,21 @@
+name: shop_dbt
+version: "1.0.0"
+config-version: 2
+
+# Must match the profile name in profiles.yml
+profile: shop_dbt
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  shop_dbt:
+    staging:
+      +materialized: view    # light cleanup, cheap to recompute
+    marts:
+      +materialized: table   # final tables for BI / analysts

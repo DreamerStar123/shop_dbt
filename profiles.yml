@@ -1,0 +1,10 @@
+# Connection settings. DuckDB is a local file database, so no server or login is needed.
+# dbt looks for this file in the project folder (when you pass --profiles-dir .)
+# or in ~/.dbt/profiles.yml.
+shop_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: shop.duckdb   # created automatically on first run
+      threads: 4

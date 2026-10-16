@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: orders
+    description: One row per order, with the total amount paid.
+    semantic_model:
+      enabled: true
+    agg_time_dimension: order_date
+    columns:
+      - name: order_id
+        description: Primary key.
+        entity:
+          type: primary
+          name: order
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_id
+        entity:
+          type: foreign
+          name: customer
+      - name: order_date
+        granularity: day
+        dimension:
+          type: time
+      - name: status
+        dimension:
+          type: categorical
+      - name: amount
+        description: Total paid for the order, in dollars.
+        data_tests:
+          - not_null
+    metrics:
+      - name: revenue
+        label: Revenue
+        type: simple
+        agg: sum
+        expr: amount
+        filter: "{{ Dimension('order__status') }} != 'returned'"
+      - name: order_count
+        label: Order count
+        type: simple
+        agg: count
+        expr: order_id
+  - name: metricflow_time_spine
+    description: One row per day, used by MetricFlow for time grouping.
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        granularity: day
+  - name: customers
+    # ...keep your existing customers entry unchanged
+
+metrics:
+  - name: average_order_value
+    label: Average order value
+    type: ratio
+    numerator: revenue
+    denominator: order_count

@@ -1,0 +1,11 @@
+id,user_id,order_date,status
+101,1,2026-01-05,completed
+102,2,2026-01-12,completed
+103,1,2026-02-01,completed
+104,3,2026-02-03,returned
+105,4,2026-02-20,completed
+106,2,2026-03-01,shipped
+107,5,2026-03-08,placed
+108,1,2026-03-15,completed
+109,3,2026-03-22,completed
+110,4,2026-04-02,shipped
